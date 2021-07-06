@@ -32,7 +32,7 @@ public class Mp3Handler implements IFileTypeHandler {
             logger.info("{} - {} ", mp3File.getId3v1Tag().getArtist(), mp3File.getId3v1Tag().getTitle());
 
             var entity = new ArtistEntity();
-            entity.setName(mp3File.getId3v1Tag().getArtist());
+            entity.setName(mp3File.getId3v1Tag().getArtist().trim());
 
             artistDao.insert(entity);
 

@@ -26,8 +26,8 @@ public class ScanService {
     private final Executor executor;
     private final ApplicationContext applicationContext;
 
-    public ScanService(Executor executor, ApplicationContext applicationContext) {
-        this.executor = executor;
+    public ScanService(Executor taskExecutor, ApplicationContext applicationContext) {
+        this.executor = taskExecutor;
         this.applicationContext = applicationContext;
     }
 
