@@ -20,7 +20,7 @@ public class AdminRestController {
 
     @GetMapping("/scan")
     public ResponseEntity<String> performScan() {
-        scanService.scanDirectory("\\\\192.168.0.201\\mp3");
+        scanService.scanDirectory("/Users/squid/mp3");
         return ResponseEntity.ok("");
     }
 
