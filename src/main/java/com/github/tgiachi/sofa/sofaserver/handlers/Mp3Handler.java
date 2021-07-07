@@ -68,7 +68,7 @@ public class Mp3Handler implements IFileTypeHandler {
 
             track.setTrackName(mp3File.getId3v2Tag().getTitle());
             track.setBitrate(mp3File.getBitrate());
-            if (mp3File.getId3v2Tag().getTrack() != null || !mp3File.getId3v2Tag().getTrack().equals("")) {
+            if (mp3File.getId3v2Tag().getTrack() != null && !mp3File.getId3v2Tag().getTrack().equals("")) {
                 track.setTrackOrder(Integer.parseInt(mp3File.getId3v2Tag().getTrack().split("/")[0]));
             }
 
@@ -81,7 +81,8 @@ public class Mp3Handler implements IFileTypeHandler {
 
             track.setHashId(md5);
 
-            if (mp3File.getId3v2Tag().getGenreDescription() != null || !mp3File.getId3v2Tag().getGenreDescription().equals("")) {
+
+            if (mp3File.getId3v2Tag().getGenreDescription() != null && !mp3File.getId3v2Tag().getGenreDescription().equals("")) {
 
                 var genre = new GenreEntity();
                 genre.setName(mp3File.getId3v2Tag().getGenreDescription());
@@ -91,7 +92,7 @@ public class Mp3Handler implements IFileTypeHandler {
 
             trackDao.insert(track);
 
-            logger.info("Added to db {} - {} - {} GENERE {} ", artist.getName(), album.getName(), track.getTrackName(), mp3File.getId3v2Tag().getGenreDescription());
+            logger.info("Added to db {} - {} - {}", artist.getName(), album.getName(), track.getTrackName());
 
         } else {
             throw new UnTrackedException();
