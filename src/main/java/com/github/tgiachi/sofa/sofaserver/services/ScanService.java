@@ -1,6 +1,9 @@
 package com.github.tgiachi.sofa.sofaserver.services;
 
 import com.github.tgiachi.sofa.sofaserver.annotations.FileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.dao.UnTrackedDao;
+import com.github.tgiachi.sofa.sofaserver.entities.UnTrackedEntity;
+import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
 import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;
 import org.slf4j.Logger;
@@ -25,10 +28,12 @@ public class ScanService {
 
     private final Executor executor;
     private final ApplicationContext applicationContext;
+    private UnTrackedDao unTrackedDao;
 
-    public ScanService(Executor taskExecutor, ApplicationContext applicationContext) {
+    public ScanService(Executor taskExecutor, ApplicationContext applicationContext, UnTrackedDao unTrackedDao) {
         this.executor = taskExecutor;
         this.applicationContext = applicationContext;
+        this.unTrackedDao = unTrackedDao;
     }
 
 
@@ -50,6 +55,16 @@ public class ScanService {
             executor.execute(() -> {
                 try {
                     handler.processFile(path);
+
+                } catch (UnTrackedException unTrackedException) {
+
+                    logger.warn("Untracked entity {}", path.getFileName().toString());
+                    var entity = new UnTrackedEntity();
+                    entity.setFilename(path.toString());
+                    entity.setFileSize(path.toFile().length());
+                    entity.setFileHandler(handler.getClass().toString());
+                    unTrackedDao.insert(entity);
+
                 } catch (Exception ex) {
                     logger.error("Error during process file {} with handler: {}", path.getFileName(), handler.getClass().getSimpleName(), ex);
                 }
@@ -77,6 +92,7 @@ public class ScanService {
                 logger.info("Found {} files", files.size());
 
                 files.forEach(this::getFileInfo);
+
 
             } catch (Exception ex) {
                 logger.error("Error during scan", ex);

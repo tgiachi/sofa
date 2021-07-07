@@ -1,9 +1,9 @@
 package com.github.tgiachi.sofa.sofaserver.entities;
 
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,14 +13,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "artists")
-public class ArtistEntity extends BaseEntity {
+@Table(name = "genres")
+public class GenreEntity extends BaseEntity {
 
-    @Column(length = 200)
     private String name;
 
-    @OneToMany(mappedBy = "artist")
-    private List<AlbumEntity> albums = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "genre")
+    private List<TrackEntity> tracks = new ArrayList<>();
 }
