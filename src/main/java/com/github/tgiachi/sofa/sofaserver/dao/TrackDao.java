@@ -14,6 +14,15 @@ public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
         super(repository);
     }
 
+    public TrackEntity findByHashId(String hashId) {
+        return repository.findByHashId(hashId);
+    }
+
+    public TrackEntity update(TrackEntity entity) {
+        repository.save(entity);
+        return entity;
+    }
+
     public TrackEntity insert(TrackEntity entity) {
 
         try {

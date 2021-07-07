@@ -2,8 +2,10 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.AlbumEntity;
+import com.github.tgiachi.sofa.sofaserver.events.AlbumAddedEvent;
 import com.github.tgiachi.sofa.sofaserver.repository.AlbumRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,6 +15,10 @@ public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> {
 
     public AlbumDao(AlbumRepository repository) {
         super(repository);
+    }
+
+    public AlbumEntity findById(Long id) {
+        return repository.findById(id).get();
     }
 
     public AlbumEntity insert(AlbumEntity albumEntity) {
@@ -29,6 +35,7 @@ public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> {
             repository.save(albumEntity);
 
             semaphore.release();
+            EventBus.getDefault().post(AlbumAddedEvent.builder().id(albumEntity.getId()).build());
             return albumEntity;
 
         } catch (Exception ex) {

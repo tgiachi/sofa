@@ -14,6 +14,7 @@ import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
 import com.mpatric.mp3agic.Mp3File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -24,6 +25,8 @@ import java.nio.file.Path;
 @FileTypeHandler(extension = "mp3")
 
 public class Mp3Handler implements IFileTypeHandler {
+
+
 
     private final ArtistDao artistDao;
     private final AlbumDao albumDao;
@@ -44,6 +47,9 @@ public class Mp3Handler implements IFileTypeHandler {
         var mp3File = new Mp3File(file.toFile());
 
         if (mp3File.hasId3v2Tag()) {
+            if (mp3File.getId3v2Tag().getArtist() == null) {
+                throw new UnTrackedException();
+            }
 
             var artist = new ArtistEntity();
             artist.setName(mp3File.getId3v2Tag().getArtist().trim());

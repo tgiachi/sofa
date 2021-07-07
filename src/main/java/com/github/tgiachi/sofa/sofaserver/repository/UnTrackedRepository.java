@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UnTrackedRepository extends CrudRepository<UnTrackedEntity, Long> {
+
+    UnTrackedEntity findByHashId(String hash);
 }

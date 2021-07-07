@@ -24,6 +24,8 @@ public class TrackEntity extends BaseEntity {
 
     private int bitrate;
 
+    private long playCount = 0;
+
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private GenreEntity genre;

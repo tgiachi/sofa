@@ -17,6 +17,9 @@ public class AlbumEntity extends BaseEntity {
     @JoinColumn(name = "album_id")
     public ArtistEntity artist;
 
+    @Column(length = 500)
+    private String coverUrl;
+
     private String name;
 
     private String year;

@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,6 +64,13 @@ public class ScanService {
                     entity.setFilename(path.toString());
                     entity.setFileSize(path.toFile().length());
                     entity.setFileHandler(handler.getClass().toString());
+                    try {
+                        InputStream is = Files.newInputStream(path);
+                        String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
+                        entity.setHashId(md5);
+                    } catch (Exception ex) {
+
+                    }
                     unTrackedDao.insert(entity);
 
                 } catch (Exception ex) {
