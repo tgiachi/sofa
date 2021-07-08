@@ -14,7 +14,7 @@ import java.util.List;
 public class AlbumEntity extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "artist_id")
     public ArtistEntity artist;
 
     @Column(length = 500)

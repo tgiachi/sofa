@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -26,9 +28,14 @@ public class TrackEntity extends BaseEntity {
 
     private long playCount = 0;
 
-    @ManyToOne
-    @JoinColumn(name = "genre_id")
-    private GenreEntity genre;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "genre_tracks",
+            joinColumns = {@JoinColumn(name = "genre_id")},
+            inverseJoinColumns = {@JoinColumn(name = "track_id")}
+    )
+
+    private List<GenreEntity> genre = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "album_id")

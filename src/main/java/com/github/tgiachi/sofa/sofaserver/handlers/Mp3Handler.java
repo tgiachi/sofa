@@ -14,7 +14,6 @@ import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
 import com.mpatric.mp3agic.Mp3File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -25,7 +24,6 @@ import java.nio.file.Path;
 @FileTypeHandler(extension = "mp3")
 
 public class Mp3Handler implements IFileTypeHandler {
-
 
 
     private final ArtistDao artistDao;
@@ -84,10 +82,14 @@ public class Mp3Handler implements IFileTypeHandler {
 
             if (mp3File.getId3v2Tag().getGenreDescription() != null && !mp3File.getId3v2Tag().getGenreDescription().equals("")) {
 
-                var genre = new GenreEntity();
-                genre.setName(mp3File.getId3v2Tag().getGenreDescription());
-                genre = genreDao.insert(genre);
-                track.setGenre(genre);
+                var genresText = mp3File.getId3v2Tag().getGenreDescription().replace(',', ';').split(";");
+                for (var genreText : genresText) {
+                    var genre = new GenreEntity();
+                    genre.setName(genreText.trim());
+                    genre = genreDao.insert(genre);
+                    track.getGenre().add(genre);
+                }
+
             }
 
             trackDao.insert(track);

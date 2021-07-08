@@ -2,16 +2,21 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
+import com.github.tgiachi.sofa.sofaserver.repository.GenreRepository;
 import com.github.tgiachi.sofa.sofaserver.repository.TrackRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Component
 public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
 
-    public TrackDao(TrackRepository repository) {
+    private final GenreRepository genreRepository;
+
+    public TrackDao(TrackRepository repository, GenreRepository genreRepository) {
         super(repository);
+        this.genreRepository = genreRepository;
     }
 
     public TrackEntity findByHashId(String hashId) {
@@ -35,6 +40,14 @@ public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
 
             entity.setCreatedDateTime(LocalDateTime.now());
             entity.setUpdateDataTime(LocalDateTime.now());
+
+//            if (!entity.getGenre().isEmpty()) {
+//                var geners = entity.getGenre();
+//                entity.setGenre(new ArrayList<>());
+//                geners.stream().map(g -> {
+//                    return genreRepository.findByName(g.getName().toUpperCase());
+//                }).forEach(gg -> entity.getGenre().add(gg));
+//            }
             repository.save(entity);
 
             semaphore.release();
