@@ -22,7 +22,7 @@ public class UnTrackedDao extends BaseDao<UnTrackedEntity, UnTrackedRepository> 
             }
 
             semaphore.release();
-            entity.setUpdateDataTime(LocalDateTime.now());
+            entity.setUpdatedDateTime(LocalDateTime.now());
             entity.setCreatedDateTime(LocalDateTime.now());
             repository.save(entity);
             semaphore.release();

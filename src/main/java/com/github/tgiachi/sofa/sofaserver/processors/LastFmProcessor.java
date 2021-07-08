@@ -5,6 +5,7 @@ import com.github.tgiachi.sofa.sofaserver.repository.AlbumRepository;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.Caller;
 import de.umass.lastfm.ImageSize;
+import de.umass.lastfm.Track;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -43,6 +44,7 @@ public class LastFmProcessor {
     public void onAlbumAdded(AlbumAddedEvent event) {
         var entity = albumDao.findById(event.getId()).get();
         if (!entity.getName().equals("")) {
+            var a =  Track.getInfo(entity.getArtist().getName(), "", lastFmApi);
             var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
             if (albumInfo != null) {
                 var url = albumInfo.getImageURL(ImageSize.LARGE);

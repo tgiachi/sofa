@@ -28,7 +28,7 @@ public class GenreDao extends BaseDao<GenreEntity, GenreRepository> {
             }
 
             entity.setCreatedDateTime(LocalDateTime.now());
-            entity.setUpdateDataTime(LocalDateTime.now());
+            entity.setUpdatedDateTime(LocalDateTime.now());
             entity.setHashId(Md5Utils.md5(entity.getName().toUpperCase()));
 
             repository.save(entity);

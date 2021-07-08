@@ -39,7 +39,7 @@ public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
             }
 
             entity.setCreatedDateTime(LocalDateTime.now());
-            entity.setUpdateDataTime(LocalDateTime.now());
+            entity.setUpdatedDateTime(LocalDateTime.now());
 
 //            if (!entity.getGenre().isEmpty()) {
 //                var geners = entity.getGenre();

@@ -45,7 +45,7 @@ public class PlaylistService extends BaseService {
             var playListItem = new PlaylistDetailEntity();
             playListItem.setTrackOrder(i + 1);
             playListItem.setCreatedDateTime(LocalDateTime.now());
-            playListItem.setUpdateDataTime(LocalDateTime.now());
+            playListItem.setUpdatedDateTime(LocalDateTime.now());
             playListItem.setTrackEntity(trackEntity);
             playListItem.setPlaylist(playlistMaster);
             playListItem.setHashId(Md5Utils.md5(trackEntity.getTrackName()));

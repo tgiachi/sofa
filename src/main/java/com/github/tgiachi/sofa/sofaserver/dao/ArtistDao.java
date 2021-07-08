@@ -24,7 +24,7 @@ public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> {
             if (ent == null) {
                 entity.setHashId(Md5Utils.md5(entity.getName()));
                 entity.setCreatedDateTime(LocalDateTime.now());
-                entity.setUpdateDataTime(LocalDateTime.now());
+                entity.setUpdatedDateTime(LocalDateTime.now());
                 repository.save(entity);
                 semaphore.release();
                 return entity;

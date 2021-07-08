@@ -1,6 +1,7 @@
 package com.github.tgiachi.sofa.sofaserver.entities;
 
 
+import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

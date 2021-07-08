@@ -1,14 +1,14 @@
-package com.github.tgiachi.sofa.sofaserver.entities;
+package com.github.tgiachi.sofa.sofaserver.entities.base;
 
+import com.github.tgiachi.sofa.sofaserver.interfaces.entities.IBaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity implements IBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,8 +16,7 @@ public class BaseEntity implements Serializable {
 
     private LocalDateTime createdDateTime;
 
-    private LocalDateTime updateDataTime;
-
+    private LocalDateTime updatedDateTime;
 
     @Column(length = 200)
     private String hashId;

@@ -76,7 +76,7 @@ public class Mp3Handler implements IFileTypeHandler {
                 track.setTrackOrder(Integer.parseInt(mp3File.getId3v2Tag().getTrack().split("/")[0]));
             }
 
-            track.setTrackLength(mp3File.getLengthInMilliseconds());
+            track.setTrackLength(mp3File.getLengthInSeconds());
             track.setFileSize(file.toFile().length());
             track.setAlbum(album);
 

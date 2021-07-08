@@ -30,7 +30,7 @@ public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> {
                 return album;
             }
             albumEntity.setCreatedDateTime(LocalDateTime.now());
-            albumEntity.setUpdateDataTime(LocalDateTime.now());
+            albumEntity.setUpdatedDateTime(LocalDateTime.now());
             albumEntity.setHashId(Md5Utils.md5(albumEntity.getName()));
             repository.save(albumEntity);
 
