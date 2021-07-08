@@ -87,7 +87,7 @@ public class ScanService {
                 } catch (Exception ex) {
                     var exception = new ExceptionFileEntity();
                     exception.setHashId(path.toString());
-                    exception.setException(exception.toString());
+                    exception.setException(ex.toString());
                     exception.setFileName(path.toString());
                     exceptionFileRepository.save(exception);
                     logger.error("Error during process file {} with handler: {}", path.getFileName(), handler.getClass().getSimpleName());
