@@ -10,4 +10,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface AlbumRepository extends CrudRepository<AlbumEntity, Long> {
     AlbumEntity findByArtistAndName(ArtistEntity artistEntity, String name);
+    AlbumEntity getByHashId(String hashId);
 }

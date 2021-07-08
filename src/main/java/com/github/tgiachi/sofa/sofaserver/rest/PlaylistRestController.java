@@ -18,9 +18,11 @@ public class PlaylistRestController {
     }
 
     @GetMapping("/random")
-    public ResponseEntity<String> createRandomPlaylist(@RequestParam String name, @RequestParam int size) {
+    public ResponseEntity<String> createRandomPlaylist(@RequestParam String name, @RequestParam int size, @RequestParam(defaultValue = "1") int playlistNumber) {
 
-        playlistService.createRandomPlaylist(name, size);
+
+            playlistService.createRandomPlaylist(name, size, playlistNumber);
+
         return ResponseEntity.ok("");
     }
 

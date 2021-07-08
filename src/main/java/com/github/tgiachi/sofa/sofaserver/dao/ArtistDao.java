@@ -39,4 +39,9 @@ public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> implement
             return entity;
         }
     }
+
+    @Override
+    public ArtistEntity findByHashId(String hashId) {
+        return repository.getByHashId(hashId);
+    }
 }

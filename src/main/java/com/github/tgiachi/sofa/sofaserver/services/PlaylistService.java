@@ -28,28 +28,33 @@ public class PlaylistService extends BaseService {
     }
 
 
-    public void createRandomPlaylist(String name, int size) {
-        var playlistMaster = new PlaylistMasterEntity();
-        playlistMaster.setName(name);
-        playlistMaster.setHashId(Md5Utils.md5(name));
-        playlistMaster.setCoverUrl("https://source.unsplash.com/random");
+    public void createRandomPlaylist(String name, int size, int count) {
+
 
         var allTracks = StreamSupport.stream(trackRepository.findAll().spliterator(), true)
                 .collect(Collectors.toList());
 
-        playlistMaster = playlistMasterRepository.insert(playlistMaster);
+        for (int j = 0; j < count; j++) {
+            var playlistMaster = new PlaylistMasterEntity();
+            playlistMaster.setName(String.format("%s #%s", name, j));
+            playlistMaster.setHashId(Md5Utils.md5(String.format("%s #%s", name, j)));
+            playlistMaster.setCoverUrl("https://source.unsplash.com/random");
+            playlistMaster = playlistMasterRepository.insert(playlistMaster);
 
-        for (int i = 0; i < size; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, allTracks.size());
-            var trackEntity = allTracks.get(randomNum);
-            var playListItem = new PlaylistDetailEntity();
-            playListItem.setTrackOrder(i + 1);
-            playListItem.setCreatedDateTime(LocalDateTime.now());
-            playListItem.setUpdatedDateTime(LocalDateTime.now());
-            playListItem.setTrackEntity(trackEntity);
-            playListItem.setPlaylist(playlistMaster);
-            playListItem.setHashId(Md5Utils.md5(trackEntity.getTrackName()));
-            playlistDetailRepository.insert(playListItem);
+            for (int i = 0; i < size; i++) {
+                int randomNum = ThreadLocalRandom.current().nextInt(0, allTracks.size());
+                var trackEntity = allTracks.get(randomNum);
+                var playListItem = new PlaylistDetailEntity();
+                playListItem.setTrackOrder(i + 1);
+                playListItem.setCreatedDateTime(LocalDateTime.now());
+                playListItem.setUpdatedDateTime(LocalDateTime.now());
+                playListItem.setTrackEntity(trackEntity);
+                playListItem.setPlaylist(playlistMaster);
+                playListItem.setHashId(Md5Utils.md5(trackEntity.getTrackName()));
+                playlistDetailRepository.insert(playListItem);
+            }
         }
+
+
     }
 }

@@ -10,11 +10,12 @@ import com.github.tgiachi.sofa.sofaserver.interfaces.rest.IBaseRestController;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public class AbstractBaseRestController<
+public abstract class AbstractBaseRestController<
         TEntity extends IBaseEntity,
         TDto extends IBaseDto,
         TRepository extends IBaseDao<TEntity, CrudRepository<TEntity, Long>>,
@@ -26,6 +27,25 @@ public class AbstractBaseRestController<
     public AbstractBaseRestController(TMapper mapper, TRepository repository) {
         this.mapper = mapper;
         this.repository = repository;
+    }
+
+    @Override
+    @GetMapping("/id/{hashId}")
+    public Mono<ResponseEntity<SofaRestResponse<TDto>>> findByHashId(@PathVariable String hashId) {
+        var response = new SofaRestResponse<TDto>();
+
+        try {
+            response.setData(mapper.toDto(repository.findByHashId(hashId)));
+            response.setStatus(SofaRestResponseType.SUCCESS);
+
+            return Mono.just(ResponseEntity.ok(response));
+
+
+        } catch (Exception ex) {
+            response.setEx(ex);
+            response.setStatus(SofaRestResponseType.ERROR);
+            return Mono.just(ResponseEntity.internalServerError().body(response));
+        }
     }
 
     @Override

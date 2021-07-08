@@ -18,4 +18,6 @@ public interface IBaseRestController<TEntity extends IBaseEntity,
 
     Mono<ResponseEntity<SofaRestResponse<List<TDto>>>> findAll();
 
+    Mono<ResponseEntity<SofaRestResponse<TDto>>> findByHashId(String hashId);
+
 }

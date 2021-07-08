@@ -44,14 +44,18 @@ public class LastFmProcessor {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onAlbumAdded(AlbumAddedEvent event) {
         var entity = albumDao.findById(event.getId()).get();
-        if (!entity.getName().equals("")) {
+
+        if (entity.getName()!= null && !entity.getName().equals("")) {
             var a = Track.getInfo(entity.getArtist().getName(), "", lastFmApi);
             var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
             if (albumInfo != null) {
                 var url = albumInfo.getImageURL(ImageSize.LARGE);
-                var calendar = Calendar.getInstance();
-                calendar.setTime(albumInfo.getReleaseDate());
-                entity.setYear(Integer.toString(calendar.get(Calendar.YEAR)));
+
+                if (albumInfo.getReleaseDate() != null) {
+                    var calendar = Calendar.getInstance();
+                    calendar.setTime(albumInfo.getReleaseDate());
+                    entity.setYear(Integer.toString(calendar.get(Calendar.YEAR)));
+                }
                 entity.setCoverUrl(url);
                 albumDao.save(entity);
             }

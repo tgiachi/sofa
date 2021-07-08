@@ -47,4 +47,9 @@ public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> implements I
         }
 
     }
+
+    @Override
+    public AlbumEntity findByHashId(String hashId) {
+        return repository.getByHashId(hashId);
+    }
 }

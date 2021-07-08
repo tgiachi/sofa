@@ -3,6 +3,8 @@ package com.github.tgiachi.sofa.sofaserver.entities;
 import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
@@ -35,13 +37,14 @@ public class TrackEntity extends BaseEntity {
 
     private long playCount = 0;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "genre_tracks",
             joinColumns = {@JoinColumn(name = "genre_id")},
             inverseJoinColumns = {@JoinColumn(name = "track_id")}
     )
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<GenreEntity> genre = new ArrayList<>();
 
     @ManyToOne

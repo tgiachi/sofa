@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IBaseDao<TEntity extends IBaseEntity, TRepository extends CrudRepository<TEntity, Long>> {
     List<TEntity> findAll();
+
+    TEntity findByHashId(String hashId);
 }
