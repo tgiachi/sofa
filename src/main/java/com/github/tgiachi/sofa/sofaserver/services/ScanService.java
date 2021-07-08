@@ -5,7 +5,7 @@ import com.github.tgiachi.sofa.sofaserver.dao.UnTrackedDao;
 import com.github.tgiachi.sofa.sofaserver.entities.ExceptionFileEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.UnTrackedEntity;
 import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
-import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.interfaces.handlers.IFileTypeHandler;
 import com.github.tgiachi.sofa.sofaserver.repository.ExceptionFileRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;

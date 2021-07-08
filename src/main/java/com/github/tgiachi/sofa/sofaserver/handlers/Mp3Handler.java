@@ -10,7 +10,7 @@ import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.GenreEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
 import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
-import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.interfaces.handlers.IFileTypeHandler;
 import com.mpatric.mp3agic.Mp3File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,14 +2,16 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
+import com.github.tgiachi.sofa.sofaserver.interfaces.dao.IBaseDao;
 import com.github.tgiachi.sofa.sofaserver.repository.ArtistRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> {
+public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> implements IBaseDao<ArtistEntity, CrudRepository<ArtistEntity, Long>> {
 
     public ArtistDao(ArtistRepository repository) {
         super(repository);
@@ -37,6 +39,4 @@ public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> {
             return entity;
         }
     }
-
-
 }

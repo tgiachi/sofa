@@ -1,6 +1,6 @@
 package com.github.tgiachi.sofa.sofaserver.dao.base;
 
-import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
+import com.github.tgiachi.sofa.sofaserver.interfaces.entities.IBaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +11,7 @@ import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public abstract class BaseDao<TEntity extends BaseEntity, TRepository extends CrudRepository<TEntity, Long>> {
+public abstract class BaseDao<TEntity extends IBaseEntity, TRepository extends CrudRepository<TEntity, Long>> {
 
     protected Semaphore semaphore = new Semaphore(1);
     protected final Logger logger = LoggerFactory.getLogger(getClass());

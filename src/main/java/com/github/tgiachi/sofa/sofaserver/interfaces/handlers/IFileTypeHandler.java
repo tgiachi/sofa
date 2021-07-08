@@ -1,4 +1,4 @@
-package com.github.tgiachi.sofa.sofaserver.interfaces;
+package com.github.tgiachi.sofa.sofaserver.interfaces.handlers;
 
 import java.nio.file.Path;
 
