@@ -2,13 +2,17 @@ package com.github.tgiachi.sofa.sofaserver.services;
 
 import com.github.tgiachi.sofa.sofaserver.annotations.FileTypeHandler;
 import com.github.tgiachi.sofa.sofaserver.dao.UnTrackedDao;
+import com.github.tgiachi.sofa.sofaserver.entities.ExceptionFileEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.UnTrackedEntity;
 import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
 import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.repository.ExceptionFileRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +34,14 @@ public class ScanService {
 
     private final Executor executor;
     private final ApplicationContext applicationContext;
-    private UnTrackedDao unTrackedDao;
+    private final UnTrackedDao unTrackedDao;
+    private final ExceptionFileRepository exceptionFileRepository;
 
-    public ScanService(Executor taskExecutor, ApplicationContext applicationContext, UnTrackedDao unTrackedDao) {
+    public ScanService(@Qualifier("taskExecutor") Executor taskExecutor, ApplicationContext applicationContext, UnTrackedDao unTrackedDao, ExceptionFileRepository exceptionFileRepository) {
         this.executor = taskExecutor;
         this.applicationContext = applicationContext;
         this.unTrackedDao = unTrackedDao;
+        this.exceptionFileRepository = exceptionFileRepository;
     }
 
 
@@ -71,7 +77,7 @@ public class ScanService {
                     entity.setFileHandler(handler.getClass().toString());
                     try {
                         InputStream is = Files.newInputStream(path);
-                        String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
+                        String md5 = DigestUtils.md5Hex(is);
                         entity.setHashId(md5);
                     } catch (Exception ex) {
 
@@ -79,7 +85,12 @@ public class ScanService {
                     unTrackedDao.insert(entity);
 
                 } catch (Exception ex) {
-                    logger.error("Error during process file {} with handler: {}", path.getFileName(), handler.getClass().getSimpleName(), ex);
+                    var exception = new ExceptionFileEntity();
+                    exception.setHashId(path.toString());
+                    exception.setException(exception.toString());
+                    exception.setFileName(path.toString());
+                    exceptionFileRepository.save(exception);
+                    logger.error("Error during process file {} with handler: {}", path.getFileName(), handler.getClass().getSimpleName());
                 }
             });
         }

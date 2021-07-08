@@ -42,11 +42,13 @@ public class LastFmProcessor {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onAlbumAdded(AlbumAddedEvent event) {
         var entity = albumDao.findById(event.getId()).get();
-        var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
-        if (albumInfo != null) {
-            var url = albumInfo.getImageURL(ImageSize.LARGE);
-            entity.setCoverUrl(url);
-            albumDao.save(entity);
+        if (!entity.getName().equals("")) {
+            var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
+            if (albumInfo != null) {
+                var url = albumInfo.getImageURL(ImageSize.LARGE);
+                entity.setCoverUrl(url);
+                albumDao.save(entity);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 
-
+@Configuration
 @EnableAsync
 public class AsyncMethodConfig {
     @Bean
@@ -16,7 +16,7 @@ public class AsyncMethodConfig {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(500);
+        executor.setQueueCapacity(Integer.MAX_VALUE);
         executor.setThreadNamePrefix("Sofa_server");
         executor.initialize();
         return executor;
