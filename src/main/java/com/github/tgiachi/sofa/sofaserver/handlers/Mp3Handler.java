@@ -40,6 +40,12 @@ public class Mp3Handler implements IFileTypeHandler {
     }
 
     @Override
+    public boolean fileExists(String hashId, boolean force) {
+        if (force) return false;
+        return trackDao.findByHashId(hashId) != null;
+    }
+
+    @Override
     public void processFile(Path file) throws Exception {
 
         var mp3File = new Mp3File(file.toFile());
@@ -101,4 +107,6 @@ public class Mp3Handler implements IFileTypeHandler {
         }
 
     }
+
+
 }

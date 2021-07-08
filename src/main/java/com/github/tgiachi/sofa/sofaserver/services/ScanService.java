@@ -5,6 +5,7 @@ import com.github.tgiachi.sofa.sofaserver.dao.UnTrackedDao;
 import com.github.tgiachi.sofa.sofaserver.entities.UnTrackedEntity;
 import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
 import com.github.tgiachi.sofa.sofaserver.interfaces.IFileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +56,12 @@ public class ScanService {
         } else {
             executor.execute(() -> {
                 try {
-                    handler.processFile(path);
-
+                    var md5 = Md5Utils.md5File(path);
+                    if (!handler.fileExists(md5, false)) {
+                        handler.processFile(path);
+                    } else {
+                        logger.info("File {} already indexed", path.getFileName());
+                    }
                 } catch (UnTrackedException unTrackedException) {
 
                     logger.warn("Untracked entity {}", path.getFileName().toString());
