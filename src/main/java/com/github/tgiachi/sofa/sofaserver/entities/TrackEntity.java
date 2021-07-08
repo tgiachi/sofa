@@ -3,6 +3,9 @@ package com.github.tgiachi.sofa.sofaserver.entities;
 import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,15 +15,18 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "tracks", indexes = {@Index(columnList = "trackName", name = "idx_trackName")})
+@Indexed
 public class TrackEntity extends BaseEntity {
 
     @Column(length = 1000)
+    @Field(termVector = TermVector.YES)
     private String filename;
 
     private int trackOrder;
 
     private long fileSize;
 
+    @Field(termVector = TermVector.YES)
     private String trackName;
 
     private long trackLength;

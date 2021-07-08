@@ -3,15 +3,17 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.AlbumEntity;
 import com.github.tgiachi.sofa.sofaserver.events.AlbumAddedEvent;
+import com.github.tgiachi.sofa.sofaserver.interfaces.dao.IBaseDao;
 import com.github.tgiachi.sofa.sofaserver.repository.AlbumRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
 import org.greenrobot.eventbus.EventBus;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> {
+public class AlbumDao extends BaseDao<AlbumEntity, AlbumRepository> implements IBaseDao<AlbumEntity, CrudRepository<AlbumEntity, Long>> {
 
     public AlbumDao(AlbumRepository repository) {
         super(repository);

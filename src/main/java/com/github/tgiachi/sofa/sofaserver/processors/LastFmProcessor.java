@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Calendar;
 
 @Service
 public class LastFmProcessor {
@@ -44,10 +45,13 @@ public class LastFmProcessor {
     public void onAlbumAdded(AlbumAddedEvent event) {
         var entity = albumDao.findById(event.getId()).get();
         if (!entity.getName().equals("")) {
-            var a =  Track.getInfo(entity.getArtist().getName(), "", lastFmApi);
+            var a = Track.getInfo(entity.getArtist().getName(), "", lastFmApi);
             var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
             if (albumInfo != null) {
                 var url = albumInfo.getImageURL(ImageSize.LARGE);
+                var calendar = Calendar.getInstance();
+                calendar.setTime(albumInfo.getReleaseDate());
+                entity.setYear(Integer.toString(calendar.get(Calendar.YEAR)));
                 entity.setCoverUrl(url);
                 albumDao.save(entity);
             }

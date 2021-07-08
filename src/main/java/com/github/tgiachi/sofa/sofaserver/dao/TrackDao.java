@@ -2,12 +2,13 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
+import com.github.tgiachi.sofa.sofaserver.events.TrackAddedEvent;
 import com.github.tgiachi.sofa.sofaserver.repository.GenreRepository;
 import com.github.tgiachi.sofa.sofaserver.repository.TrackRepository;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Component
 public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
@@ -41,16 +42,11 @@ public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
             entity.setCreatedDateTime(LocalDateTime.now());
             entity.setUpdatedDateTime(LocalDateTime.now());
 
-//            if (!entity.getGenre().isEmpty()) {
-//                var geners = entity.getGenre();
-//                entity.setGenre(new ArrayList<>());
-//                geners.stream().map(g -> {
-//                    return genreRepository.findByName(g.getName().toUpperCase());
-//                }).forEach(gg -> entity.getGenre().add(gg));
-//            }
             repository.save(entity);
 
             semaphore.release();
+
+            EventBus.getDefault().post(TrackAddedEvent.builder().id(entity.getId()).build());
 
             return entity;
         } catch (Exception ex) {
