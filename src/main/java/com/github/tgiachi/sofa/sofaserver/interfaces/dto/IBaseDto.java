@@ -8,13 +8,13 @@ public interface IBaseDto extends Serializable {
 
     void setId(long id);
 
-    LocalDateTime getCreatedDateTime();
-
-    void setCreatedDateTime(LocalDateTime value);
-
-    LocalDateTime getUpdatedDateTime();
-
-    void setUpdatedDateTime(LocalDateTime value);
+//    LocalDateTime getCreatedDateTime();
+//
+//    void setCreatedDateTime(LocalDateTime value);
+//
+//    LocalDateTime getUpdatedDateTime();
+//
+//    void setUpdatedDateTime(LocalDateTime value);
 
     String getHashId();
 

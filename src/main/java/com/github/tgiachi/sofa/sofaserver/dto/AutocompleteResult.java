@@ -8,13 +8,15 @@ import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Builder
 public class AutocompleteResult extends BaseEntity {
     List<TrackEntity> tracks = new ArrayList<>();
@@ -22,4 +24,9 @@ public class AutocompleteResult extends BaseEntity {
     List<ArtistEntity> artists = new ArrayList<>();
     List<PlaylistMasterEntity> playlists = new ArrayList<>();
 
+    public AutocompleteResult() {
+        setUpdatedDateTime(LocalDateTime.now());
+        setCreatedDateTime(LocalDateTime.now());
+        setHashId(UUID.randomUUID().toString().replace("-", ""));
+    }
 }

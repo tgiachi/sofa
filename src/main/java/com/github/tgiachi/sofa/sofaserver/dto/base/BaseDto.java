@@ -10,11 +10,10 @@ public class BaseDto implements IBaseDto {
 
     private long id;
 
-    private LocalDateTime createdDateTime;
-
-    private LocalDateTime updatedDateTime;
+//    private LocalDateTime createdDateTime;
+//
+//    private LocalDateTime updatedDateTime;
 
     private String hashId;
 
-    private long version;
 }

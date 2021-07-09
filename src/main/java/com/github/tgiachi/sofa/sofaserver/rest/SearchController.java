@@ -14,27 +14,19 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.util.concurrent.ForkJoinPool;
 
 @RestController
-@RequestMapping("/api/v1")
-public class AdminRestController {
-
+@RequestMapping("/api/v1/search")
+public class SearchController {
     private final ScanService scanService;
     private final SearchService searchService;
     private final AutocompleteResultMapper autocompleteResultMapper;
 
-    public AdminRestController(ScanService scanService, SearchService searchService, AutocompleteResultMapper autocompleteResultMapper) {
+    public SearchController(ScanService scanService, SearchService searchService, AutocompleteResultMapper autocompleteResultMapper) {
         this.scanService = scanService;
         this.searchService = searchService;
         this.autocompleteResultMapper = autocompleteResultMapper;
     }
 
-
-    @GetMapping("/indexes/rebuild")
-    public ResponseEntity<String> purgeIndexes() {
-        searchService.rebuildIndexes();
-        return ResponseEntity.ok("");
-    }
-
-    @GetMapping("/indexes/autocomplete")
+    @GetMapping("/search/autocomplete")
     public DeferredResult<ResponseEntity<AutocompleteResultDto>> autocomplete(@RequestParam String text) {
 
         var out = new DeferredResult<ResponseEntity<AutocompleteResultDto>>();
@@ -44,6 +36,5 @@ public class AdminRestController {
 
         return out;
     }
-
 
 }
