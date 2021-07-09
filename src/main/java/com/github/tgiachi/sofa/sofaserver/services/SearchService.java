@@ -5,25 +5,17 @@ import com.github.tgiachi.sofa.sofaserver.entities.AlbumEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.PlaylistMasterEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
-import com.github.tgiachi.sofa.sofaserver.entities.base.BaseEntity;
 import com.github.tgiachi.sofa.sofaserver.interfaces.entities.IBaseEntity;
 import com.github.tgiachi.sofa.sofaserver.services.base.BaseService;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;
-
-import org.apache.lucene.queryparser.flexible.standard.builders.WildcardQueryNodeBuilder;
-import org.apache.lucene.search.FuzzyQuery;
-import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -85,11 +77,13 @@ public class SearchService extends BaseService {
         return result;
     }
 
-    private <TEntity extends IBaseEntity> CompletableFuture<List<TEntity>> fullTextSearchFuture(Class<TEntity> classz, String fieldName, String text) {
+    @Transactional
+    <TEntity extends IBaseEntity> CompletableFuture<List<TEntity>> fullTextSearchFuture(Class<TEntity> classz, String fieldName, String text) {
         return CompletableFuture.completedFuture(fullTextSearch(classz, fieldName, text));
     }
 
-    private <TEntity extends IBaseEntity> List<TEntity> fullTextSearch(Class<TEntity> classz, String fieldName, String text) {
+    @Transactional
+    <TEntity extends IBaseEntity> List<TEntity> fullTextSearch(Class<TEntity> classz, String fieldName, String text) {
         var ftem = Search.getFullTextEntityManager(entityManager);
 
         var query = fullTextEntityManager
@@ -102,6 +96,7 @@ public class SearchService extends BaseService {
                 .onField(fieldName)
                 .matching(String.format("*%s*", text))
                 .createQuery();
-        return (List<TEntity>) ftem.createFullTextQuery(query, classz).setMaxResults(5).getResultList();
+        var results = (List<TEntity>) ftem.createFullTextQuery(query, classz).setMaxResults(5).getResultList();
+        return results;
     }
 }

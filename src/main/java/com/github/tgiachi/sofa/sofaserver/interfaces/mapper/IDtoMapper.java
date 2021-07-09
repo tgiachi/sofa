@@ -14,4 +14,5 @@ public interface IDtoMapper<TEntity extends IBaseEntity, TDto extends IBaseDto> 
 
     List<TEntity> toEntity(List<TDto> dtos);
 
+
 }

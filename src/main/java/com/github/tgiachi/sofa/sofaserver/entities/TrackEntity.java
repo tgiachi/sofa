@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
@@ -28,6 +29,7 @@ public class TrackEntity extends BaseEntity {
 
     private long fileSize;
 
+    @Analyzer
     @Field(termVector = TermVector.YES)
     private String trackName;
 
@@ -47,7 +49,8 @@ public class TrackEntity extends BaseEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<GenreEntity> genre = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "album_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private AlbumEntity album;
 }
