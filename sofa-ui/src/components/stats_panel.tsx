@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {StatsResponse} from "../api/api.interfaces";
-import {StatsRoute} from "../consts/api.routes";
+import {StatsRoute} from "../api/api.routes";
 import {Stack, Stat, StatLabel, StatNumber} from "@chakra-ui/react"
 
 export const StatsPanel = () => {

@@ -1,17 +1,21 @@
 import ReactAudioPlayer from 'react-audio-player';
-import {useEffect, useState} from "react";
-import {GetStreamUrl} from "../consts/api.routes";
+import {useCallback, useEffect, useState} from "react";
+import {GetStreamUrl} from "../api/api.routes";
 import {TrackEntity} from "../api/api.interfaces";
+import {observer} from "mobx-react";
+import {PlayerStore} from "../store/player_store";
 
-export const AudioPlayerComponent = ({track}: { track?: TrackEntity }) => {
+export const AudioPlayerComponent = observer(({track, context}: { track?: TrackEntity, context: PlayerStore }) => {
+    const [hash, setHash] = useState("");
 
-    const [hash, setHash] = useState(track?.hashId);
+
     useEffect(() => {
-        if (track)
-            setHash(GetStreamUrl(track.hashId));
-    }, [track])
+        console.log("SELECTED " + context.trackHashId)
+        setHash(context.trackHashId);
+    }, [context.trackHashId])
 
+    
     return (
-        <ReactAudioPlayer src={hash} autoPlay controls/>
+        <ReactAudioPlayer src={GetStreamUrl(hash)} autoPlay controls/>
     )
-}
+});

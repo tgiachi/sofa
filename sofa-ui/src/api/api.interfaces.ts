@@ -32,3 +32,15 @@ export interface AlbumEntity extends BaseEntity {
 export interface ArtistEntity extends BaseEntity {
     name: string;
 }
+export interface PlaylistEntity extends BaseEntity {
+    name: string,
+    coverUrl: string
+}
+
+export interface SearchResultEntity extends BaseEntity {
+    tracks: TrackEntity[],
+    albums: AlbumEntity[],
+    artists: ArtistEntity[],
+    playlists: PlaylistEntity[]
+
+}

@@ -2,7 +2,7 @@ import {VStack} from "@chakra-ui/react"
 import {useEffect, useState} from "react";
 import {AlbumEntity} from "../api/api.interfaces";
 import {AlbumItem} from "./album_item"
-import {AllAlbumRouter} from "../consts/api.routes";
+import {AllAlbumRouter} from "../api/api.routes";
 
 export const AlbumsPanel = () => {
 
