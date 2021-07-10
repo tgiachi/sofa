@@ -13,7 +13,7 @@ import java.util.List;
 @Transactional
 public interface TrackMapper extends IDtoMapper<TrackEntity, TrackDto> {
 
-    @Mapping(source = "album.hashId", target = "albumId")
+
     TrackDto toDto(TrackEntity entity);
 
     List<TrackDto> toDto(List<TrackEntity> entities);

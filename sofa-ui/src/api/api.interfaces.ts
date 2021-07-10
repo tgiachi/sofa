@@ -19,6 +19,9 @@ export interface TrackEntity extends BaseEntity {
     trackLength: number;
     bitrate: number;
     playCount: number;
+    albumHashId: string;
+    artistName: string;
+    artistHashId: string;
 }
 
 export interface AlbumEntity extends BaseEntity {

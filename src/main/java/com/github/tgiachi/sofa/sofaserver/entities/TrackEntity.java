@@ -33,6 +33,8 @@ public class TrackEntity extends BaseEntity {
     @Field(termVector = TermVector.YES)
     private String trackName;
 
+
+
     private long trackLength;
 
     private int bitrate;
@@ -53,4 +55,13 @@ public class TrackEntity extends BaseEntity {
     @JoinColumn(name = "album_id")
     @LazyCollection(LazyCollectionOption.FALSE)
     private AlbumEntity album;
+
+    private String albumHashId;
+
+    @Analyzer
+    @Field(termVector = TermVector.YES)
+    private String artistName;
+
+    private String artistHashId;
+
 }

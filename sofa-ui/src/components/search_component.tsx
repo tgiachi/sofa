@@ -14,7 +14,7 @@ export const SearchComponent = ({context} : {context: PlayerStore}) => {
     const [results, setResults] = useState<SearchResultEntity>();
 
     useEffect(() => {
-        if (search && search.length > 3) {
+        if (search && search.length >= 3) {
             fetch(`${AutocompleteRoute}?text=${search}`).then(res => res.json()).then(data => {
                 setResults(data);
                 console.log(data);

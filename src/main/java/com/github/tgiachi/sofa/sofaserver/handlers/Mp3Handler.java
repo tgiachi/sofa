@@ -79,6 +79,9 @@ public class Mp3Handler implements IFileTypeHandler {
             track.setTrackLength(mp3File.getLengthInSeconds());
             track.setFileSize(file.toFile().length());
             track.setAlbum(album);
+            track.setAlbumHashId(album.getHashId());
+            track.setArtistName(artist.getName());
+            track.setArtistHashId(artist.getHashId());
 
             InputStream is = Files.newInputStream(file);
             String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(is);
