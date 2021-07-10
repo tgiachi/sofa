@@ -14,7 +14,7 @@ export const AudioPlayerComponent = observer(({track, context}: { track?: TrackE
         setHash(context.trackHashId);
     }, [context.trackHashId])
 
-    
+
     return (
         <ReactAudioPlayer src={GetStreamUrl(hash)} autoPlay controls/>
     )
