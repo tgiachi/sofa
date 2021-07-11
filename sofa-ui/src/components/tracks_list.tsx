@@ -4,7 +4,7 @@ import {Box} from "@chakra-ui/react";
 import {AlbumItem} from "./album_item";
 import {TrackItem} from "./track_item";
 
-export const TracksLists = ({tracks, onClick} : {tracks?: TrackEntity[]; onClick: (hash: string) => void}) =>{
+export const TracksLists = ({tracks, onClick} : {tracks?: TrackEntity[]; onClick: (track: TrackEntity ) => void}) =>{
     return (<Box>
         {tracks?.map(value => {
             return (

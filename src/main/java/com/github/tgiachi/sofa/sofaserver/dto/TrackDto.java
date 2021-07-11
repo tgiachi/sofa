@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+
 public class TrackDto extends BaseDto {
     private String filename;
 

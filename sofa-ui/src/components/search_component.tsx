@@ -7,8 +7,9 @@ import {AlbumList} from "./albums_list";
 import {ArtistsList} from "./artists_list";
 import {TracksLists} from "./tracks_list";
 import {PlayerStore} from "../store/player_store";
+import {RootStore} from "../store/root_store";
 
-export const SearchComponent = ({context} : {context: PlayerStore}) => {
+export const SearchComponent = ({context} : {context: RootStore}) => {
 
     const [search, setSearch] = useState("");
     const [results, setResults] = useState<SearchResultEntity>();
@@ -29,7 +30,7 @@ export const SearchComponent = ({context} : {context: PlayerStore}) => {
         <Box>
             <AlbumList albums={results?.albums} />
             <ArtistsList artists={results?.artists} />
-            <TracksLists onClick={(event) => {context.playTrack(event)}}  tracks={results?.tracks}/>
+            <TracksLists onClick={(event) => {context.playerStore.playTrack(event)}}  tracks={results?.tracks}/>
         </Box>
 
     </Container>)
