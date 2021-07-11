@@ -25,5 +25,8 @@ public class ArtistEntity extends BaseEntity {
     @OneToMany(mappedBy = "artist")
     private List<AlbumEntity> albums = new ArrayList<>();
 
+    @Column(length = 300)
+    private String coverUrl;
+
 
 }

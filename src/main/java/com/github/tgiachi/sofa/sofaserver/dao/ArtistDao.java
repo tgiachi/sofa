@@ -2,9 +2,12 @@ package com.github.tgiachi.sofa.sofaserver.dao;
 
 import com.github.tgiachi.sofa.sofaserver.dao.base.BaseDao;
 import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
+import com.github.tgiachi.sofa.sofaserver.events.AlbumAddedEvent;
+import com.github.tgiachi.sofa.sofaserver.events.ArtistAddedEvent;
 import com.github.tgiachi.sofa.sofaserver.interfaces.dao.IBaseDao;
 import com.github.tgiachi.sofa.sofaserver.repository.ArtistRepository;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +32,7 @@ public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> implement
                 entity.setUpdatedDateTime(LocalDateTime.now());
                 repository.save(entity);
                 semaphore.release();
+                EventBus.getDefault().post(ArtistAddedEvent.builder().id(entity.getId()).build());
                 return entity;
             }
             semaphore.release();
@@ -43,5 +47,10 @@ public class ArtistDao extends BaseDao<ArtistEntity, ArtistRepository> implement
     @Override
     public ArtistEntity findByHashId(String hashId) {
         return repository.getByHashId(hashId);
+    }
+
+
+    public ArtistEntity findArtistByName(String artist) {
+        return repository.findByName(artist);
     }
 }
