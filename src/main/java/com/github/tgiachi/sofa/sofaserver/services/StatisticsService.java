@@ -4,7 +4,6 @@ import com.github.tgiachi.sofa.sofaserver.dao.ArtistDao;
 import com.github.tgiachi.sofa.sofaserver.dao.PlaylistMasterDao;
 import com.github.tgiachi.sofa.sofaserver.dao.TrackDao;
 import com.github.tgiachi.sofa.sofaserver.dto.StatisticsDto;
-import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
 import com.github.tgiachi.sofa.sofaserver.services.base.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,8 @@ public class StatisticsService extends BaseService {
 
     public StatisticsDto calculateStats() {
 
-        var totalSize = trackDao.findAll().stream().map(TrackEntity::getFileSize).reduce(0L, Long::sum);
-        var totalLength = trackDao.findAll().stream().map(TrackEntity::getTrackLength).reduce(0L, Long::sum);
+        var totalSize = trackDao.sumByFileSize();
+        var totalLength = trackDao.sumByTrackLength();
 
 
         return StatisticsDto.builder()

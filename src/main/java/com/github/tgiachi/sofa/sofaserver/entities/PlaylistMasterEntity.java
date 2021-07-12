@@ -25,6 +25,6 @@ public class PlaylistMasterEntity extends BaseEntity {
     @Column(length = 300)
     private String coverUrl;
 
-    @OneToMany(mappedBy = "playlist")
+    @OneToMany(mappedBy = "playlist", fetch = FetchType.EAGER)
     private List<PlaylistDetailEntity> tracks = new ArrayList<>();
 }

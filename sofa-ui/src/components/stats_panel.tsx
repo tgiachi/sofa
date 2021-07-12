@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {StatsResponse} from "../api/api.interfaces";
 import {StatsRoute} from "../api/api.routes";
 import {Stack, Stat, StatLabel, StatNumber} from "@chakra-ui/react"
+import humanizer from "humanize-duration";
 
 export const StatsPanel = () => {
 
@@ -13,6 +14,7 @@ export const StatsPanel = () => {
             })
         }
     })
+
     return (<Stack direction="row">
         <Stat>
             <StatLabel>Artists</StatLabel>
@@ -24,7 +26,7 @@ export const StatsPanel = () => {
         </Stat>
         <Stat>
             <StatLabel>Audio length</StatLabel>
-            <StatNumber>{stats?.totalAudioLength}</StatNumber>
+            <StatNumber>{ humanizer( (stats?.totalTracks || 1) * 1000 )}</StatNumber>
         </Stat>
         <Stat>
             <StatLabel>Total file size</StatLabel>

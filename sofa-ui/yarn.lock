@@ -1353,6 +1353,14 @@
   dependencies:
     "@chakra-ui/utils" "1.8.1"
 
+"@chakra-ui/icons@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.npmjs.org/@chakra-ui/icons/-/icons-1.0.14.tgz#8d402074dabdb410af36e6f1af047bb186973053"
+  integrity sha512-VM21FkQc4rWcES1D6ddNIq6VYaCnTwWBIaqM9GRQZ7FpsLeVNk6UFYiE8MMtGWVIXq3k9jEYLbQHm7YdEF9yLQ==
+  dependencies:
+    "@chakra-ui/icon" "1.1.10"
+    "@types/react" "^17.0.0"
+
 "@chakra-ui/image@1.0.17":
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.17.tgz#b5c7fd564af1d23303eafe1d443c7dbecfd4cf31"
@@ -1920,6 +1928,16 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
+"@iconify/icons-mdi@^1.0.46":
+  version "1.1.15"
+  resolved "https://registry.npmjs.org/@iconify/icons-mdi/-/icons-mdi-1.1.15.tgz#e035130cc480c4318fb4cb21b8b836a2ba32c8b9"
+  integrity sha512-H2dwj/vlBXd9Gc7d66m8ZW/8TZcxshMwIoyUkyTMft1mnGqsxJWq5QEWnX+jkmL8KKGR/czqh6p9sEe67Laq6Q==
+
+"@iconify/react@^1.1.3":
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/@iconify/react/-/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
+  integrity sha512-oxq8IMOq8q3nKGiDHbQPC8FcFuBsKve68JWBo140d5LRnj0bv5TB/FE/y01ZSvEZ7PlI2HIrnb2qivPN8kTDgw==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -2457,6 +2475,11 @@
   version "5.1.2"
   resolved "https://registry.npmjs.org/@types/html-minifier-terser/-/html-minifier-terser-5.1.2.tgz#693b316ad323ea97eed6b38ed1a3cc02b1672b57"
   integrity sha512-h4lTMgMJctJybDp8CQrxTUiiYmedihHWkjnF/8Pxseu2S6Nlfcy8kwboQ8yejh456rP2yWoEVm1sS/FVsfM48w==
+
+"@types/humanize-duration@^3.25.1":
+  version "3.25.1"
+  resolved "https://registry.npmjs.org/@types/humanize-duration/-/humanize-duration-3.25.1.tgz#b6140d5fc00ff3917b3f521784abef4bc0387ccc"
+  integrity sha512-WZU/4bb+lvzyDmZzjJtp++9mfKy6B3lH6gGISgkcz6SU8hMILKRM0vi08TxIsb0dQB4Gzo68MWLmctu6xqUi9g==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
@@ -6420,6 +6443,11 @@ human-signals@^1.1.1:
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
+humanize-duration@^3.27.0:
+  version "3.27.0"
+  resolved "https://registry.npmjs.org/humanize-duration/-/humanize-duration-3.27.0.tgz#3f781b7cf8022ad587f76b9839b60bc2b29636b2"
+  integrity sha512-qLo/08cNc3Tb0uD7jK0jAcU5cnqCM0n568918E7R2XhMr/+7F37p4EY062W/stg7tmzvknNn9b/1+UhVRzsYrQ==
+
 iconv-lite@0.4.24:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -9864,6 +9892,15 @@ react-focus-lock@2.5.0:
     react-clientside-effect "^1.2.2"
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
+
+react-h5-audio-player@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/react-h5-audio-player/-/react-h5-audio-player-3.7.1.tgz#7401f1385a5bd369652dde18cca5823fd6cc6f30"
+  integrity sha512-MWeMZ/orBXxt48P4SVBUfzRy+lw5acz61nc8mhDzqfE4VP7kPzpAnedGsC7mhu+BKy5/1+nO/0q4FFCuNe6U2Q==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@iconify/icons-mdi" "^1.0.46"
+    "@iconify/react" "^1.1.3"
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

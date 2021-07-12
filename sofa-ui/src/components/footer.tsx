@@ -1,15 +1,9 @@
-import {RootStore} from "../store/root_store";
-import {Flex, Heading} from "@chakra-ui/react";
-import {SearchComponent} from "./search_component";
 import React from "react";
+import {AudioPlayerComponent} from "./audio_player_component";
 
-export const Footer = ({rootStore} : {rootStore: RootStore}) => {
-    return (<Flex justify="space-between" borderBottom="1px" borderColor="gray.200" p={3}>
-        <Heading as="h3" size="lg" m={1}>
-            Sofa Streamer
-        </Heading>
-        <Heading as="h3" size="lg" m={1}>
+export const Footer = () => {
+    return (<footer>
 
-        </Heading>
-    </Flex>)
+        <AudioPlayerComponent track={undefined}/>
+    </footer>)
 }

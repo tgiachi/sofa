@@ -1,6 +1,8 @@
-package com.github.tgiachi.sofa.sofaserver.dao;
+package com.github.tgiachi.sofa.sofaserver.dto;
 
+import com.github.tgiachi.sofa.sofaserver.dto.PlaylistDetailDto;
 import com.github.tgiachi.sofa.sofaserver.dto.base.BaseDto;
+import com.github.tgiachi.sofa.sofaserver.entities.PlaylistDetailEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +11,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,4 +24,6 @@ public class PlaylistMasterDto extends BaseDto {
     private String name;
 
     private String coverUrl;
+
+    private List<PlaylistDetailDto> tracks = new ArrayList<>();
 }

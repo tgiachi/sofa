@@ -1,36 +1,85 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import './App.css';
-import {StatsPanel} from "./components/stats_panel";
-import {ChakraProvider, Container} from "@chakra-ui/react"
-import {AudioPlayerComponent} from "./components/audio_player_component";
-import {AlbumsPanel} from "./components/albums_panel";
-import {Grid, GridItem, Flex, Button, Box, CSSReset} from "@chakra-ui/react"
-import {SearchComponent} from "./components/search_component";
-import {PlayerStore} from "./store/player_store";
-import {RootStore} from "./store/root_store";
-import {Header} from "./components/header";
+import {Box, ChakraProvider, CSSReset, Grid, GridItem, Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react"
 import {ThemeProvider} from "@emotion/react";
 import {customTheme} from "./theme";
-import {Footer} from "./components/footer";
+import {SearchResultComponent} from "./components/search_result_component";
+import {AudioPlayerComponent} from "./components/audio_player_component";
+import {Header} from "./components/header";
+import {PlaylistComponent} from "./components/playlist_component";
 
 
 function App() {
-    const rootStore = new RootStore();
+
     return (
         <ThemeProvider theme={customTheme}>
-            <CSSReset />
+            <CSSReset/>
             <ChakraProvider>
-                <Header rootStore={rootStore}/>
-                <Container>
-                    <div className="App">
-                        <StatsPanel/>
-                        {/*<AlbumsPanel/>*/}
 
-                        <AudioPlayerComponent context={rootStore} track={undefined}/>
+                <Grid
+                    h="900"
+                    w="300"
+                    templateRows="repeat(8, 1fr)"
+                    templateColumns="repeat(5, 1fr)"
+                    gap={2}
+                >
+                    <GridItem rowSpan={8} colSpan={1}>
+                        <Header/>
+                    </GridItem>
+                    <GridItem colSpan={4} rowSpan={6}>
+                        <Box>
+                            <Tabs>
+                                <TabList>
+                                    <Tab>Current</Tab>
+                                    <Tab>Playlists</Tab>
+                                </TabList>
+                                <TabPanels>
+                                    <TabPanel>
+                                        <SearchResultComponent/>
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <PlaylistComponent/>
+                                    </TabPanel>
+                                </TabPanels>
+                            </Tabs>
 
-                    </div>
-                </Container>
-                <Footer rootStore={rootStore} />
+                        </Box>
+                    </GridItem>
+
+                    <GridItem colSpan={4} rowSpan={2}>
+                        <Box flex={1}>
+                            <AudioPlayerComponent track={undefined}/>
+                        </Box>
+                    </GridItem>
+                </Grid>
+
+                {/*<Header/>*/}
+
+                {/*<Flex borderBottom="1px" borderColor="gray.200" p={1}>*/}
+
+                {/*    <Tabs>*/}
+                {/*        <TabList>*/}
+                {/*            <Tab>Current</Tab>*/}
+                {/*            <Tab>Playlists</Tab>*/}
+                {/*        </TabList>*/}
+
+                {/*        <TabPanels>*/}
+                {/*            <TabPanel>*/}
+                {/*                <SearchResultComponent/>*/}
+                {/*            </TabPanel>*/}
+                {/*            <TabPanel>*/}
+                {/*                <PlaylistComponent/>*/}
+                {/*            </TabPanel>*/}
+
+                {/*        </TabPanels>*/}
+                {/*    </Tabs>*/}
+
+
+                {/*    /!*<AlbumsPanel/>*!/*/}
+
+
+                {/*</Flex>*/}
+                {/*<Footer/>*/}
             </ChakraProvider>
         </ThemeProvider>
 

@@ -1,35 +1,48 @@
-import ReactAudioPlayer from 'react-audio-player';
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {GetStreamUrl} from "../api/api.routes";
 import {TrackEntity} from "../api/api.interfaces";
 import {observer} from "mobx-react";
-import {PlayerStore} from "../store/player_store";
-import {AlbumsStore} from "../store/albums_store";
-import {RootStore} from "../store/root_store";
-import {Image, Text} from "@chakra-ui/react";
+import {Box, Center, HStack, Image, Text} from "@chakra-ui/react";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import {useStore} from "../store/useStore";
 
-export const AudioPlayerComponent = observer(({track, context}: { track?: TrackEntity, context: RootStore }) => {
+export const AudioPlayerComponent = observer(({track}: { track?: TrackEntity }) => {
     const [hash, setHash] = useState("");
     const [albumUrl, setAlbumUrl] = useState("");
-    const albumStore = new AlbumsStore();
+    const {rootStore} = useStore();
+    const albumStore = rootStore.albumStore;
 
     useEffect(() => {
         console.log(`${track}`)
-        console.log("SELECTED " + context.playerStore.currentTrack)
-        setHash(context.playerStore.currentTrack?.hashId || "");
-        if (context.playerStore.currentTrack) {
-            context.albumStore.findAlbumById((context.playerStore.currentTrack as TrackEntity).albumHashId).then(data => {
+        console.log("SELECTED " + rootStore.playerStore.currentTrack)
+        setHash(rootStore.playerStore.currentTrack?.hashId || "");
+        if (rootStore.playerStore.currentTrack) {
+            rootStore.albumStore.findAlbumById((rootStore.playerStore.currentTrack as TrackEntity).albumHashId).then(data => {
                 setAlbumUrl(data?.coverUrl || "");
             })
         }
-    }, [context.playerStore.currentTrack])
+    }, [rootStore.playerStore.currentTrack])
 
 
     return (
-        <>
-        <ReactAudioPlayer src={GetStreamUrl(hash)} autoPlay controls/>
-            <Image src={albumUrl} />
-            <Text>{context.playerStore.currentTrack?.artistName} - {context.playerStore.currentTrack?.trackName}</Text>
-        </>
+        <HStack p={3}>
+            <Box>
+                <Center w={"150px"} h={"150px"}>
+                    <Image src={albumUrl} w={150} h={150}/>
+                </Center>
+            </Box>
+            <Box>
+                <AudioPlayer showDownloadProgress showFilledVolume autoPlay
+                             src={GetStreamUrl(hash)}/>
+            </Box>
+            <Box>
+                <Center>
+
+                    <Text
+                        fontSize={"5xl"}>{rootStore.playerStore.currentTrack?.artistName} - {rootStore.playerStore.currentTrack?.trackName}</Text>
+                </Center>
+            </Box>
+        </HStack>
     )
 });

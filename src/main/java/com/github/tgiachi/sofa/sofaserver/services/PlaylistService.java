@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class PlaylistService extends BaseService {
@@ -31,8 +29,7 @@ public class PlaylistService extends BaseService {
     public void createRandomPlaylist(String name, int size, int count) {
 
 
-        var allTracks = StreamSupport.stream(trackRepository.findAll().spliterator(), true)
-                .collect(Collectors.toList());
+        var allTracks = trackRepository.selectAllTracksId();
 
         for (int j = 0; j < count; j++) {
             var playlistMaster = new PlaylistMasterEntity();
@@ -48,9 +45,9 @@ public class PlaylistService extends BaseService {
                 playListItem.setTrackOrder(i + 1);
                 playListItem.setCreatedDateTime(LocalDateTime.now());
                 playListItem.setUpdatedDateTime(LocalDateTime.now());
-                playListItem.setTrackEntity(trackEntity);
+                playListItem.setTrackEntity(trackRepository.findById(trackEntity).get());
                 playListItem.setPlaylist(playlistMaster);
-                playListItem.setHashId(Md5Utils.md5(trackEntity.getTrackName()));
+                playListItem.setHashId(Md5Utils.md5(trackEntity.toString()));
                 playlistDetailRepository.insert(playListItem);
             }
         }

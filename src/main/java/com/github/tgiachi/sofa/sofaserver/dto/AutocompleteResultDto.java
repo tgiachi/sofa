@@ -1,14 +1,8 @@
 package com.github.tgiachi.sofa.sofaserver.dto;
 
-import com.github.tgiachi.sofa.sofaserver.dao.PlaylistMasterDto;
 import com.github.tgiachi.sofa.sofaserver.dto.base.BaseDto;
-import com.github.tgiachi.sofa.sofaserver.entities.AlbumEntity;
-import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
-import com.github.tgiachi.sofa.sofaserver.entities.PlaylistMasterEntity;
-import com.github.tgiachi.sofa.sofaserver.entities.TrackEntity;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

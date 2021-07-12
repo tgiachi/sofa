@@ -2,6 +2,7 @@ package com.github.tgiachi.sofa.sofaserver.rest.entities;
 
 import com.github.tgiachi.sofa.sofaserver.dao.ArtistDao;
 import com.github.tgiachi.sofa.sofaserver.data.SofaRestResponse;
+import com.github.tgiachi.sofa.sofaserver.data.SofaRestResponseType;
 import com.github.tgiachi.sofa.sofaserver.dto.ArtistDto;
 import com.github.tgiachi.sofa.sofaserver.entities.ArtistEntity;
 import com.github.tgiachi.sofa.sofaserver.mappers.ArtistMapper;
@@ -38,6 +39,6 @@ public class ArtistRestController extends AbstractBaseRestController<ArtistEntit
                 results.add(art);
         });
 
-        return Mono.just(SofaRestResponse.<List<ArtistDto>>builder().data(mapper.toDto(results)).build());
+        return Mono.just(SofaRestResponse.<List<ArtistDto>>builder().status(SofaRestResponseType.SUCCESS).data(mapper.toDto(results)).build());
     }
 }

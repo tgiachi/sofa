@@ -9,6 +9,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
@@ -27,6 +28,18 @@ public class TrackDao extends BaseDao<TrackEntity, TrackRepository> {
     public TrackEntity update(TrackEntity entity) {
         repository.save(entity);
         return entity;
+    }
+
+    public long sumByFileSize() {
+        return repository.sumByFileSize();
+    }
+
+    public long sumByTrackLength() {
+        return repository.sumByTrackLength();
+    }
+
+    public List<Long> selectAllTrackId() {
+        return repository.selectAllTracksId();
     }
 
     public TrackEntity insert(TrackEntity entity) {
