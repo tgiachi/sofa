@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {GetStreamUrl} from "../api/api.routes";
 import {TrackEntity} from "../api/api.interfaces";
 import {observer} from "mobx-react";
-import {Box, Center, HStack, Image, Text} from "@chakra-ui/react";
+import {Box, Center, HStack, Image, Text, VStack} from "@chakra-ui/react";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import {useStore} from "../store/useStore";
@@ -26,7 +26,7 @@ export const AudioPlayerComponent = observer(({track}: { track?: TrackEntity }) 
 
 
     return (
-        <HStack p={3}>
+        <VStack p={3}>
             <Box>
                 <Center w={"150px"} h={"150px"}>
                     <Image src={albumUrl} w={150} h={150}/>
@@ -40,9 +40,9 @@ export const AudioPlayerComponent = observer(({track}: { track?: TrackEntity }) 
                 <Center>
 
                     <Text
-                        fontSize={"5xl"}>{rootStore.playerStore.currentTrack?.artistName} - {rootStore.playerStore.currentTrack?.trackName}</Text>
+                        fontSize={"md"}>{rootStore.playerStore.currentTrack?.artistName} - {rootStore.playerStore.currentTrack?.trackName}</Text>
                 </Center>
             </Box>
-        </HStack>
+        </VStack>
     )
 });

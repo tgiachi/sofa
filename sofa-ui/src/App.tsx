@@ -8,7 +8,6 @@ import {AudioPlayerComponent} from "./components/audio_player_component";
 import {Header} from "./components/header";
 import {PlaylistComponent} from "./components/playlist_component";
 
-
 function App() {
 
     return (
@@ -47,8 +46,9 @@ function App() {
                     </GridItem>
 
                     <GridItem colSpan={4} rowSpan={2}>
-                        <Box flex={1}>
-                            <AudioPlayerComponent track={undefined}/>
+                        <Box sx={{ position: 'sticky', top: '0', }}>
+
+
                         </Box>
                     </GridItem>
                 </Grid>
