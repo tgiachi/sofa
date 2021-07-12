@@ -3,7 +3,7 @@ import {AlbumEntity, TrackEntity} from "../api/api.interfaces";
 import {Avatar, Box, Center, HStack, Td, Text, Tr} from "@chakra-ui/react";
 import {useStore} from "../store/useStore";
 import {useEffect, useState} from "react";
-import {ArrowForwardIcon} from '@chakra-ui/icons'
+import {ArrowForwardIcon, ArrowUpIcon} from '@chakra-ui/icons'
 
 
 const formatDuration = (s: number): string => {
@@ -31,7 +31,7 @@ export const TrackItemComponent = observer(({track}: { track?: TrackEntity }) =>
         })
     }, [track?.albumHashId])
 
-    const {albumStore, playerStore} = useStore().rootStore;
+    const {albumStore, playerStore, queueStore} = useStore().rootStore;
 
     return (<Tr>
         <Td> <Box>
@@ -40,6 +40,10 @@ export const TrackItemComponent = observer(({track}: { track?: TrackEntity }) =>
                     if (track)
                         playerStore.playTrack(track);
                 }}/>
+                <ArrowUpIcon onClick={event => {
+                    if (track)
+                        queueStore.addQueue(track);
+                }} />
             </Center>
         </Box> </Td>
         <Td>{track?.trackOrder}</Td>

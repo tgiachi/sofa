@@ -7,9 +7,12 @@ import {SearchResultComponent} from "./components/search_result_component";
 import {AudioPlayerComponent} from "./components/audio_player_component";
 import {Header} from "./components/header";
 import {PlaylistComponent} from "./components/playlist_component";
+import {TracksComponent} from "./components/tracks_component";
+import {useStore} from "./store/useStore";
 
 function App() {
 
+    const {queueStore} = useStore().rootStore;
     return (
         <ThemeProvider theme={customTheme}>
             <CSSReset/>
@@ -31,6 +34,7 @@ function App() {
                                 <TabList>
                                     <Tab>Current</Tab>
                                     <Tab>Playlists</Tab>
+                                    <Tab>Queue</Tab>
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel>
@@ -38,6 +42,9 @@ function App() {
                                     </TabPanel>
                                     <TabPanel>
                                         <PlaylistComponent/>
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <TracksComponent tracks={queueStore.tracks} />
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

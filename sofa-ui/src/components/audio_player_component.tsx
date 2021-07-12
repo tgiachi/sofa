@@ -11,6 +11,7 @@ export const AudioPlayerComponent = observer(({track}: { track?: TrackEntity }) 
     const [hash, setHash] = useState("");
     const [albumUrl, setAlbumUrl] = useState("");
     const {rootStore} = useStore();
+    const queueStore = rootStore.queueStore;
     const albumStore = rootStore.albumStore;
 
     useEffect(() => {
@@ -33,7 +34,10 @@ export const AudioPlayerComponent = observer(({track}: { track?: TrackEntity }) 
                 </Center>
             </Box>
             <Box>
-                <AudioPlayer showDownloadProgress showFilledVolume autoPlay
+                <AudioPlayer  onEnded={e => {
+                    console.log("Audio track end")
+                    queueStore.onTrackEnd()
+                }} showDownloadProgress showFilledVolume autoPlay
                              src={GetStreamUrl(hash)}/>
             </Box>
             <Box>
