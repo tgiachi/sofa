@@ -96,7 +96,7 @@ public class SearchService extends BaseService {
                 .onField(fieldName)
                 .matching(String.format("*%s*", text))
                 .createQuery();
-        var results = (List<TEntity>) ftem.createFullTextQuery(query, classz).setMaxResults(10).getResultList();
+        var results = (List<TEntity>) ftem.createFullTextQuery(query, classz).setMaxResults(50).getResultList();
         return results;
     }
 }

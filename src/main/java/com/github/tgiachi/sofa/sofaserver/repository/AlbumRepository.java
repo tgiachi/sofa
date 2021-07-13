@@ -6,9 +6,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public interface AlbumRepository extends CrudRepository<AlbumEntity, Long> {
     AlbumEntity findByArtistAndName(ArtistEntity artistEntity, String name);
-    AlbumEntity getByHashId(String hashId);
+
+    List<AlbumEntity> getByHashId(String hashId);
+
 }
