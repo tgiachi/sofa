@@ -3,8 +3,10 @@ plugins {
 }
 
 frontend {
+    yarnEnabled = true
+    yarnVersion = '1.22.10'
     nodeVersion = '16.4.2'
     assembleScript = 'run build'
-    cleanScript = 'run clean'
-    checkScript = 'run check'
+//    cleanScript = 'run clean'
+
 }

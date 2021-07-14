@@ -23,6 +23,7 @@ export const ArtistDetailComponent = observer(() => {
                 setArtist(data);
             }
         })
+        setSimilarArtists([]);
         artistStore.findSimilarArtistById(params.id).then(data => {
             setSimilarArtists(data);
         })

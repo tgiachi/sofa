@@ -32,6 +32,7 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+**/**/node/
+**/**/yarn/
 ### VS Code ###
 .vscode/
