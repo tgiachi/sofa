@@ -15,4 +15,6 @@ public interface AlbumRepository extends CrudRepository<AlbumEntity, Long> {
 
     List<AlbumEntity> getByHashId(String hashId);
 
+    List<AlbumEntity> findAlbumEntitiesByArtist(ArtistEntity artistEntity);
+
 }
