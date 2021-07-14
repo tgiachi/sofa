@@ -23,5 +23,24 @@ export class RootStore {
         this.searchStore = new SearchStore();
         this.playlistStore = new PlaylistStore();
         this.queueStore = new QueueStore();
+        console.log("Store created");
+        this.artistStore.getAll();
+        this.playlistStore.getPlaylists()
+        Promise.all([
+            new Promise<string>(resolve => {
+                console.log("Getting all artists")
+                this.artistStore.getAll();
+                resolve("");
+            }),
+            new Promise<string>(resolve => {
+                console.log("Getting all playlists")
+                this.playlistStore.getPlaylists();
+                resolve("");
+            })
+        ]).then(value => {
+            console.log("Prefetch ok")
+        })
+
+
     }
 }

@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from "mobx";
 import {ArtistEntity} from "../api/api.interfaces";
-import {ArtistById} from "../api/api.routes";
+import {AllArtists, ArtistById} from "../api/api.routes";
 
 export class ArtistsStore {
     artistsCache: Map<String, ArtistEntity> = new Map<String, ArtistEntity>();
@@ -11,6 +11,17 @@ export class ArtistsStore {
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    @action
+    public getAll() {
+        fetch(AllArtists).then(data => data.json()).then(res => {
+            const arts = res.data as ArtistEntity[];
+            
+            arts.forEach(value => {
+                this.artistsCache.set(value.hashId, value);
+            })
+        })
     }
 
     @action

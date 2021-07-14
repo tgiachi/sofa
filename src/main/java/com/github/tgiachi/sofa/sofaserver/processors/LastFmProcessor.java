@@ -34,7 +34,7 @@ public class LastFmProcessor {
 
     public LastFmProcessor(AlbumRepository albumDao, ArtistRepository artistRepository) {
         this.albumDao = albumDao;
-        this.artistRepository =artistRepository;
+        this.artistRepository = artistRepository;
     }
 
     @PostConstruct
@@ -52,8 +52,8 @@ public class LastFmProcessor {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onArtistAdded(ArtistAddedEvent event) {
         var entity = artistRepository.findById(event.getId());
-        if (entity.isPresent()){
-            if (!entity.get().getName().equals("")){
+        if (entity.isPresent()) {
+            if (!entity.get().getName().equals("")) {
                 var artistLastFm = Artist.search(entity.get().getName(), lastFmApi).stream().findFirst();
                 if (artistLastFm.isPresent()) {
                     var image = artistLastFm.get().getImageURL(ImageSize.LARGE);
@@ -62,6 +62,27 @@ public class LastFmProcessor {
                 }
             }
         }
+    }
+
+    public Artist findArtistByName(String name) {
+        var apiResult = Artist.search(name, lastFmApi);
+        var artists = apiResult.stream().collect(Collectors.toUnmodifiableList());
+        if (artists.isEmpty())
+            return null;
+
+        return artists.stream().findFirst().get();
+    }
+
+    public String correctArtistName(String name) {
+        var apiResult = Artist.getCorrection(name, lastFmApi);
+        if (apiResult != null) {
+            return apiResult.getName();
+        }
+        return name;
+    }
+
+    public List<String> findArtistImage(String artistId) {
+        return Artist.getImages(artistId, lastFmApi).getPageResults().stream().map(s -> s.getUrl()).collect(Collectors.toList());
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)

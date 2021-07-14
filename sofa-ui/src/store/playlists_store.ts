@@ -19,6 +19,5 @@ export class PlaylistStore {
 
     constructor() {
         makeAutoObservable(this);
-        this.getPlaylists();
     }
 }

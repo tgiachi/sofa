@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ArtistDto extends BaseDto {
     private String name;
+
+    private String coverUrl;
 }

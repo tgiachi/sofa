@@ -1,6 +1,7 @@
 const currentUrl = window.location;
 let apiUrl = "";
-if (currentUrl.toString() === "http://localhost:3000/") {
+console.log(currentUrl);
+if (currentUrl.host === "localhost:3000") {
     apiUrl = "http://localhost:8080";
 } else {
     apiUrl = currentUrl.toString();
@@ -15,7 +16,9 @@ export const GetStreamUrl = (hashId: string) => {
     return ApiBaseUrl + "/stream/" + hashId
 };
 export const ArtistById = ApiBaseUrl + "/artists/id";
+export const AllArtists = ApiBaseUrl + "/artists/all";
 export const AlbumsById = ApiBaseUrl + "/albums/id";
+
 export const AllPlaylists = ApiBaseUrl + "/playlists/all";
 
 export const AutocompleteRoute = ApiBaseUrl + "/indexes/autocomplete";
