@@ -1,7 +1,8 @@
 import {observer} from "mobx-react";
 import {TrackEntity} from "../../api/api.interfaces";
 import {Button, Col, Container, Row} from "react-bootstrap";
-import {Play, Stack} from "react-bootstrap-icons";
+import { Play, Stack} from "react-bootstrap-icons";
+import {Link } from "react-router-dom";
 import {AlbumImage} from "../albums/AlbumImage";
 import {useStore} from "../../store/useStore";
 
@@ -47,7 +48,10 @@ export const TrackItem = observer(({track}: { track?: TrackEntity }) => {
                         <AlbumImage albumId={track?.albumHashId}/>
                     </Col>
                     <Col md={10}>
-                        {track?.artistName}
+                        <Link to={`/artist/${track?.hashId}`}>
+                            {track?.artistName}
+                        </Link>
+
                     </Col>
 
                 </Row>

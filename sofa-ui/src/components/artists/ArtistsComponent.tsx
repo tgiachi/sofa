@@ -5,15 +5,15 @@ import {useStore} from "../../store/useStore";
 import {Col, Container, Row} from "react-bootstrap";
 import {ArtistItem} from "./ArtistItem";
 
-export const ArtistsComponent = observer(() => {
-    const {artistStore} = useStore().rootStore;
+export const ArtistsComponent = observer(({artists} : {artists?: ArtistEntity[]}) => {
+
     const [artistsCache, setArtistsCache] = useState<ArtistEntity[]>([]);
 
     useEffect(() => {
-        if (artistStore.artists) {
-            setArtistsCache(Array.from(artistStore.artists.values()));
+        if (artists) {
+            setArtistsCache(artists);
         }
-    }, [artistStore.artists])
+    }, [artists])
 
     return <Container fluid>
         <Row xs={1} md={4} className="g-5">

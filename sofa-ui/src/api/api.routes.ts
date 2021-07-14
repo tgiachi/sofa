@@ -16,6 +16,7 @@ export const GetStreamUrl = (hashId: string) => {
     return ApiBaseUrl + "/stream/" + hashId
 };
 export const ArtistById = ApiBaseUrl + "/artists/id";
+export const ArtistSimilarById = ApiBaseUrl + "/artists/similar";
 export const AllArtists = ApiBaseUrl + "/artists/all";
 export const AlbumsById = ApiBaseUrl + "/albums/id";
 

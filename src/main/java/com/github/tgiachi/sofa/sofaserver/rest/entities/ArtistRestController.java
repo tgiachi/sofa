@@ -33,6 +33,8 @@ public class ArtistRestController extends AbstractBaseRestController<ArtistEntit
         var results = new ArrayList<ArtistEntity>();
         var artist = repository.findByHashId(artistId);
         var similarArtists = lastFmProcessor.getSimilarArtist(artist.getName());
+
+        similarArtists = similarArtists.subList(0, 5);
         similarArtists.forEach(s -> {
             var art = repository.findArtistByName(s);
             if (art != null)
