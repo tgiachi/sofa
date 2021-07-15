@@ -33,13 +33,13 @@ public class TrackEntity extends BaseEntity {
     @Field(termVector = TermVector.YES)
     private String trackName;
 
-
-
     private long trackLength;
 
     private int bitrate;
 
     private long playCount = 0;
+
+    private long globalPlayCount = 0;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(

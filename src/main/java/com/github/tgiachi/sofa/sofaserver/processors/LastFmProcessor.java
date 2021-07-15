@@ -2,8 +2,10 @@ package com.github.tgiachi.sofa.sofaserver.processors;
 
 import com.github.tgiachi.sofa.sofaserver.events.AlbumAddedEvent;
 import com.github.tgiachi.sofa.sofaserver.events.ArtistAddedEvent;
+import com.github.tgiachi.sofa.sofaserver.events.TrackAddedEvent;
 import com.github.tgiachi.sofa.sofaserver.repository.AlbumRepository;
 import com.github.tgiachi.sofa.sofaserver.repository.ArtistRepository;
+import com.github.tgiachi.sofa.sofaserver.repository.TrackRepository;
 import de.umass.lastfm.*;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -23,6 +25,7 @@ public class LastFmProcessor {
 
     private final AlbumRepository albumDao;
     private final ArtistRepository artistRepository;
+    private final TrackRepository trackRepository;
 
     @Value("${lastfm.api}")
     private String lastFmApi;
@@ -32,9 +35,10 @@ public class LastFmProcessor {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public LastFmProcessor(AlbumRepository albumDao, ArtistRepository artistRepository) {
+    public LastFmProcessor(AlbumRepository albumDao, ArtistRepository artistRepository, TrackRepository trackRepository) {
         this.albumDao = albumDao;
         this.artistRepository = artistRepository;
+        this.trackRepository = trackRepository;
     }
 
     @PostConstruct
@@ -57,10 +61,25 @@ public class LastFmProcessor {
                 var artistLastFm = Artist.search(entity.get().getName(), lastFmApi).stream().findFirst();
                 if (artistLastFm.isPresent()) {
                     var image = artistLastFm.get().getImageURL(ImageSize.LARGE);
+                    entity.get().setMDbId(artistLastFm.get().getMbid());
                     entity.get().setCoverUrl(image);
                     artistRepository.save(entity.get());
                 }
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onTrackAdded(TrackAddedEvent event) {
+        var entity = trackRepository.findById(event.getId());
+        if (entity.isPresent()) {
+            var trackLastFM = Track.getInfo(entity.get().getArtistName(), entity.get().getTrackName(), lastFmApi);
+            if (trackLastFM != null) {
+                entity.get().setMDbId(trackLastFM.getMbid());
+                entity.get().setGlobalPlayCount(trackLastFM.getPlaycount());
+                trackRepository.save(entity.get());
+            }
+
         }
     }
 
@@ -90,11 +109,13 @@ public class LastFmProcessor {
         var entity = albumDao.findById(event.getId()).get();
 
         if (entity.getName() != null && !entity.getName().equals("")) {
-            var a = Track.getInfo(entity.getArtist().getName(), "", lastFmApi);
+
             var albumInfo = Album.getInfo(entity.getArtist().getName(), entity.getName(), lastFmApi);
+
             if (albumInfo != null) {
                 var url = albumInfo.getImageURL(ImageSize.LARGE);
-
+                entity.setMDbId(albumInfo.getMbid());
+                entity.setGlobalPlayCount(albumInfo.getPlaycount());
                 if (albumInfo.getReleaseDate() != null) {
                     var calendar = Calendar.getInstance();
                     calendar.setTime(albumInfo.getReleaseDate());

@@ -19,4 +19,8 @@ public interface IBaseDto extends Serializable {
     String getHashId();
 
     void setHashId(String value);
+
+    String getMDbId();
+
+    void setMDbId(String value);
 }

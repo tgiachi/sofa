@@ -23,4 +23,6 @@ public class BaseEntity implements IBaseEntity {
 
     @Version
     private long version;
+
+    private String mDbId;
 }

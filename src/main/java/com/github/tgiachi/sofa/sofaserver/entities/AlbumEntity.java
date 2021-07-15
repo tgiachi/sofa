@@ -33,6 +33,8 @@ public class AlbumEntity extends BaseEntity {
 
     private String year;
 
+    private long globalPlayCount = 0;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "album")
     public List<TrackEntity> tracks = new ArrayList<>();

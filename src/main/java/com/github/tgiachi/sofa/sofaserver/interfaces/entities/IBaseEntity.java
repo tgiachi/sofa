@@ -20,4 +20,8 @@ public interface IBaseEntity extends Serializable {
 
     void setHashId(String value);
 
+    String getMDbId();
+
+    void setMDbId(String value);
+
 }

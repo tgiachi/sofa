@@ -14,4 +14,6 @@ public abstract class BaseDto implements IBaseDto {
 
     private String hashId;
 
+    private String mDbId;
+
 }
