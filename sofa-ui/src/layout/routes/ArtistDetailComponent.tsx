@@ -1,12 +1,10 @@
 import {observer} from "mobx-react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useStore} from "../../store/useStore";
 import {Card, Col, Container, Image, Row} from "react-bootstrap";
 import {ArtistEntity} from "../../api/api.interfaces";
 import {ArtistsComponent} from "../../components/artists/ArtistsComponent";
-import {LinkContainer} from "react-router-bootstrap";
-import {Link} from "react-router-dom";
 
 export const ArtistDetailComponent = observer(() => {
 

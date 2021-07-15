@@ -1,7 +1,6 @@
 import {observer} from "mobx-react";
 import {useEffect, useState} from "react";
 import {ArtistEntity} from "../../api/api.interfaces";
-import {useStore} from "../../store/useStore";
 import {Col, Container, Row} from "react-bootstrap";
 import {ArtistItem} from "./ArtistItem";
 

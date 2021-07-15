@@ -8,7 +8,8 @@ import {ChevronCompactLeft, ChevronCompactRight} from "react-bootstrap-icons";
 const pageSize = 20;
 
 export const TracksTable = observer(({tracks}: { tracks?: TrackEntity[] }) => {
-    const [page, setPage] = useState(1);
+
+    const [page, setPage] = useState(0);
     const [paginatedTracks, setPaginatedTracks] = useState<TrackEntity[]>([]);
     useEffect(() => {
         if (tracks) {
@@ -40,7 +41,10 @@ export const TracksTable = observer(({tracks}: { tracks?: TrackEntity[] }) => {
                 </Table>
             </Row>
             <Row sm={12}>
-                <Button size={"sm"} onClick={() => setPage(page - 1)}><ChevronCompactLeft/></Button>
+                <Button size={"sm"} onClick={() => {
+                    if (page - 1 >= 0)
+                        setPage(page - 1)
+                }}><ChevronCompactLeft/></Button>
                 <Button size={"sm"} onClick={() => setPage(page + 1)}><ChevronCompactRight/></Button>
             </Row>
 

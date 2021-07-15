@@ -1,12 +1,20 @@
-import {action, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, toJS} from "mobx";
 import {AlbumEntity, ArtistEntity} from "../api/api.interfaces";
-import {AllArtists, ArtistAlbum, ArtistById, ArtistSimilarById} from "../api/api.routes";
+import {AlbumsById, AllArtists, ArtistAlbum, ArtistById, ArtistSimilarById} from "../api/api.routes";
 
 export class ArtistsStore {
     artistsCache: Map<String, ArtistEntity> = new Map<String, ArtistEntity>();
     albumCache: AlbumEntity[] = [];
+
+    mArtistAlbum: AlbumEntity | undefined;
+
+
     get albums() {
         return this.albumCache;
+    }
+
+    get artistAlbum() {
+        return this.mArtistAlbum;
     }
 
     get artists() {
@@ -16,15 +24,26 @@ export class ArtistsStore {
     constructor() {
         makeAutoObservable(this)
         this.albumCache = [];
+        this.mArtistAlbum = undefined;
+    }
+
+
+    @action
+    public findArtistAlbum(albumId: string) {
+        fetch(AlbumsById + `/${albumId}`).then(res => res.json()).then(data => {
+            console.log(`Album detail`);
+            this.mArtistAlbum = data.data as AlbumEntity;
+
+        })
     }
 
     @action
     public findAlbums(artistId: string) {
         fetch(ArtistAlbum + `/${artistId}`).then(res => res.json()).then(data => {
-           this.albumCache = data as AlbumEntity[];
-       })
 
-
+            this.albumCache = data.data as AlbumEntity[];
+            console.log(`Found albums ${this.albumCache.length}`)
+        })
     }
 
     @action

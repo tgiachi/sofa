@@ -3,9 +3,11 @@ import React from "react";
 import {observer} from "mobx-react";
 import {useStore} from "../store/useStore";
 import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const Header = observer(() => {
 
+    const history = useHistory();
     const {searchStore} = useStore().rootStore;
 
     return (<Navbar bg="dark" variant="dark">
@@ -27,9 +29,15 @@ export const Header = observer(() => {
 
             </Nav>
 
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => {
-                searchStore.search(event.target.value);
-            }}/>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2"
+                         onKeyPress={(event: any) => {
+                             if (event.charCode === 13) {
+                                 console.log("Searching for " + event.target.value);
+                                 searchStore.search(event.target.value);
+                                 history.push("/search");
+                             }
+                         }}
+            />
 
         </Navbar.Collapse>
     </Navbar>)

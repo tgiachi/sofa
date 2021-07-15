@@ -31,7 +31,7 @@ export const AudioPlayer = observer(({track}: { track?: TrackEntity }) => {
 
     return (
         <Container fluid>
-            <Row className="align-items-center">
+            <Row >
                 <Col sm="2">
                     <Image width={100} height={100} src={albumCover}/>
                 </Col>

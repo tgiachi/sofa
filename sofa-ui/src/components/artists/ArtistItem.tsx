@@ -1,6 +1,5 @@
 import {ArtistEntity} from "../../api/api.interfaces";
 import {Card} from "react-bootstrap";
-import {Link} from "react-bootstrap-icons";
 import {LinkContainer} from 'react-router-bootstrap'
 
 export const ArtistItem = ({artist}: { artist?: ArtistEntity }) => {

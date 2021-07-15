@@ -1,6 +1,6 @@
 import {action, makeAutoObservable} from "mobx";
-import {AlbumEntity, ArtistEntity} from "../api/api.interfaces";
-import {AlbumsById, ArtistById} from "../api/api.routes";
+import {AlbumEntity} from "../api/api.interfaces";
+import {AlbumsById} from "../api/api.routes";
 
 export class AlbumsStore {
     albumcache: Map<String, AlbumEntity> = new Map<String, AlbumEntity>();

@@ -1,4 +1,8 @@
-@import "styles/variables";
+@import "~bootswatch/dist/darkly/variables";
 @import "~bootstrap/scss/bootstrap";
-@import "styles/bootswatch";
+@import "~bootswatch/dist/darkly/bootswatch";
 
+.ui  {
+  margin: 10px;
+  padding-bottom: 130px;
+}

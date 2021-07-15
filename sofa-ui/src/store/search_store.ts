@@ -1,7 +1,6 @@
 import {action, makeAutoObservable} from "mobx";
 import {SearchResultEntity} from "../api/api.interfaces";
 import {AutocompleteRoute} from "../api/api.routes";
-import {throttle} from 'throttle-typescript';
 
 export class SearchStore {
 
