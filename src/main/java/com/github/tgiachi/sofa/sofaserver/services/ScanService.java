@@ -2,46 +2,57 @@ package com.github.tgiachi.sofa.sofaserver.services;
 
 import com.github.tgiachi.sofa.sofaserver.annotations.FileTypeHandler;
 import com.github.tgiachi.sofa.sofaserver.dao.UnTrackedDao;
+import com.github.tgiachi.sofa.sofaserver.entities.DirectoryWatchEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.ExceptionFileEntity;
 import com.github.tgiachi.sofa.sofaserver.entities.UnTrackedEntity;
 import com.github.tgiachi.sofa.sofaserver.exceptions.UnTrackedException;
 import com.github.tgiachi.sofa.sofaserver.interfaces.handlers.IFileTypeHandler;
+import com.github.tgiachi.sofa.sofaserver.repository.DirectoryWatchRepository;
 import com.github.tgiachi.sofa.sofaserver.repository.ExceptionFileRepository;
+import com.github.tgiachi.sofa.sofaserver.services.base.BaseService;
 import com.github.tgiachi.sofa.sofaserver.utils.Md5Utils;
 import com.github.tgiachi.sofa.sofaserver.utils.ReflectionUtils;
+import io.methvin.watcher.DirectoryChangeEvent;
+import io.methvin.watcher.DirectoryChangeListener;
+import io.methvin.watcher.DirectoryWatcher;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 @Service
-public class ScanService {
+public class ScanService extends BaseService implements DirectoryChangeListener {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final HashMap<String, Class<?>> handlers = new HashMap<>();
+
+    private final List<DirectoryWatcher> directoryWatchers = new ArrayList<>();
 
     private final Executor executor;
     private final ApplicationContext applicationContext;
     private final UnTrackedDao unTrackedDao;
     private final ExceptionFileRepository exceptionFileRepository;
+    private final DirectoryWatchRepository directoryWatchRepository;
 
-    public ScanService(@Qualifier("taskExecutor") Executor taskExecutor, ApplicationContext applicationContext, UnTrackedDao unTrackedDao, ExceptionFileRepository exceptionFileRepository) {
+    public ScanService(@Qualifier("taskExecutor") Executor taskExecutor, ApplicationContext applicationContext, UnTrackedDao unTrackedDao, ExceptionFileRepository exceptionFileRepository, DirectoryWatchRepository directoryWatchRepository) {
         this.executor = taskExecutor;
         this.applicationContext = applicationContext;
         this.unTrackedDao = unTrackedDao;
         this.exceptionFileRepository = exceptionFileRepository;
+        this.directoryWatchRepository = directoryWatchRepository;
     }
 
 
@@ -52,6 +63,27 @@ public class ScanService {
             logger.info("Adding handler for {} ({})", annotation.extension(), a.getSimpleName());
             handlers.put(annotation.extension(), a);
         });
+
+        createDirectoryWatchers();
+    }
+
+    private void createDirectoryWatchers() {
+
+        directoryWatchRepository.findAll().forEach(d -> {
+            logger.info("Creating directory watcher for {}", d.getDirectory());
+
+            try {
+                startDirectoryWatch(Path.of(d.getDirectory()));
+            } catch (Exception ex) {
+                logger.error("Error during listen directory: {}", d.getDirectory(), ex);
+            }
+
+        });
+
+    }
+
+    private void startDirectoryWatch(Path path) throws Exception {
+        directoryWatchers.add(DirectoryWatcher.builder().path(path).listener(this).build());
     }
 
     public void getFileInfo(Path path) {
@@ -105,7 +137,24 @@ public class ScanService {
         return null;
     }
 
+    private void addIfNotExists(String directory) {
+        var entity = directoryWatchRepository.findByDirectory(directory);
+        if (entity == null) {
+            entity = new DirectoryWatchEntity();
+            entity.setDirectory(directory);
+            entity.setCreatedDateTime(LocalDateTime.now());
+            entity.setUpdatedDateTime(LocalDateTime.now());
+            directoryWatchRepository.save(entity);
+            try {
+                startDirectoryWatch(Path.of(entity.getDirectory()));
+            } catch (Exception ex) {
+                logger.error("Error during start directory watch: {}", directory, ex);
+            }
+        }
+    }
+
     public void scanDirectory(String directory) {
+        addIfNotExists(directory);
         executor.execute(() -> {
             try {
                 var files = Files.find(Paths.get(directory),
@@ -126,4 +175,13 @@ public class ScanService {
         });
     }
 
+    @Override
+    public void onEvent(DirectoryChangeEvent event) throws IOException {
+        switch (event.eventType()) {
+            case CREATE: {
+                logger.info("Created new file : {}", event.path());
+                getFileInfo(event.path());
+            }
+        }
+    }
 }
